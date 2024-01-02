@@ -1,0 +1,6 @@
+.env
+.venv
+summaries/
+transcripts/
+posts/
+__pycache__/
