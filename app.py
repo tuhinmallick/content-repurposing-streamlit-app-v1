@@ -19,8 +19,7 @@ def display_text_with_copy_button(file_path, title):
 
     copy_button_key = f"copy-button-{title.replace(' ', '-').lower()}"
 
-    copy_button = st.button("Copy to Clipboard", key=copy_button_key)
-    if copy_button:
+    if copy_button := st.button("Copy to Clipboard", key=copy_button_key):
         components.html(
             f"""
             <script>

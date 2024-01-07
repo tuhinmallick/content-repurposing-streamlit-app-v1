@@ -76,16 +76,14 @@ def split_summary_with_openai_chat(summary, num_chunks=3):
                     }}
                 """
 
-        response = openai_client.chat.completions.create(
+        if response := openai_client.chat.completions.create(
             model="gpt-4-1106-preview",
             messages=[
                 {"role": "system", "content": "Please divide this text."},
                 {"role": "user", "content": prompt},
             ],
             response_format={"type": "json_object"},
-        )
-
-        if response:
+        ):
             response_text = response.choices[0].message.model_dump_json()
             print(f"Response: ===== \n{response_text}")
             # Parse the JSON response
@@ -95,9 +93,7 @@ def split_summary_with_openai_chat(summary, num_chunks=3):
             json_response = json.loads(json_string)
             print(f"JSON Response: ===== \n{json_response}")
 
-            chunks = json_response.get("chunks", [])
-            return chunks
-
+            return json_response.get("chunks", [])
     except Exception as e:
         print(f"An error occurred: {e}")
         return []
